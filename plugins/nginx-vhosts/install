@@ -2,7 +2,7 @@
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 # nginx & dig
-pacman -S --no-confirm nginx dnsutils
+pacman -S --noconfirm nginx dnsutils
 
 if ! grep -q dokku-nginx-reload "/etc/sudoers"; then
   touch /etc/sudoers.tmp
