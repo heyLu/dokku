@@ -14,6 +14,17 @@ all:
 	# Type "make install" to install.
 
 install: dependencies stack copyfiles plugins version
+	@if ! grep "conf.d" /etc/nginx/nginx.conf; then \
+		echo; \
+		echo "Add 'include /etc/nginx/conf.d/*.conf;' to /etc/nginx/nginx.conf"; \
+		echo "And then run 'systemctl reload nginx' to pick it up"; \
+		echo; \
+	fi
+
+uninstall:
+	rm -rf /home/dokku
+	userdel dokku
+	rm -f /etc/nginx/conf.d/dokku.conf
 
 copyfiles: addman
 	cp dokku ${PREFIX}/bin/dokku
