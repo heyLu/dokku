@@ -34,10 +34,15 @@ plugins: pluginhook docker
 dependencies: sshcommand pluginhook docker stack
 
 sshcommand:
+	if [[ ! -d "sshcommand" ]]; then git clone git://github.com/progrium/sshcommand; fi
 	cp sshcommand/sshcommand ${PREFIX}/bin
 	sshcommand create dokku ${PREFIX}/bin/dokku
 
 pluginhook:
+	if [[ ! -d "pluginhook" ]]; then git clone git://github.com/progrium/pluginhook; fi
+	if [[ ! -e "pluginhook/pluginhook" ]]; then \
+		cd pluginhook && GOPATH=`pwd` go get -d . && GOPATH=`pwd` go build && cd -; \
+	fi
 	cp pluginhook/pluginhook ${PREFIX}/bin
 
 docker:
